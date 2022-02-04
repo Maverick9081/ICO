@@ -10,6 +10,7 @@ contract ICO is NiceToken  {
     uint private preSaleTokens=3*10**16;
     uint private seedSaleTokens =5*10**16;
     uint private finalSaleTokens=2*10**16;
+    uint private denominator =10**4;
    
     constructor () {
         admin = msg.sender;
@@ -20,21 +21,12 @@ contract ICO is NiceToken  {
         _;
     }
 
-    function tokenPrice() public view returns(uint) {
-        if(currentIcoPhase == 1) {
-            return 3333;
-        }
-        else if(currentIcoPhase == 2) {
-            return 6666;
-        }
-        else if(currentIcoPhase ==3) {
-            return 100000;
-        }
-    }
+    
+    
 
     function buyToken(address buyer)public payable  {
         uint weiAmount = msg.value;
-        require(weiAmount >= tokenPrice());
+        require(weiAmount >100000);
         uint amount = getTokenAmount(weiAmount);
         mintTokens(buyer,amount);
     }
@@ -57,14 +49,28 @@ contract ICO is NiceToken  {
         return balance;
     }
 
+    function tokenPrice() internal view returns(uint) {
+        if(currentIcoPhase == 1) {
+            return 3;
+        }
+        else if(currentIcoPhase == 2) {
+            return 6;
+        }
+        else if(currentIcoPhase ==3) {
+            return 9;
+        }
+    }
+    
+    function getTokenAmount(uint weiAmount) internal  returns (uint) {
+        return weiAmount*tokenPrice()/denominator ;
+    }
+
     function changePhase() internal{
         require(currentIcoPhase <3);
         currentIcoPhase ++;
     }
 
-    function getTokenAmount(uint weiAmount) internal  returns (uint) {
-        return weiAmount/tokenPrice();
-    }
+    
         
     function mintTokens(address buyer,uint amount)internal {
         uint tokens = mintedTokens + amount;
@@ -80,4 +86,5 @@ contract ICO is NiceToken  {
             changePhase();
         }
     } 
+
 }
