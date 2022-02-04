@@ -21,9 +21,6 @@ contract ICO is NiceToken  {
         _;
     }
 
-    
-    
-
     function buyToken(address buyer)public payable  {
         uint weiAmount = msg.value;
         require(weiAmount >100000);
@@ -70,8 +67,6 @@ contract ICO is NiceToken  {
         currentIcoPhase ++;
     }
 
-    
-        
     function mintTokens(address buyer,uint amount)internal {
         uint tokens = mintedTokens + amount;
         require(
