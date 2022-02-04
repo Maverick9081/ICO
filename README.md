@@ -14,12 +14,12 @@ The price of the tokens is determined as followed :
         NiceToken supports 9 decimals, so
         
         price of 1 Nice Token =10**9 nNTK = 3333 * 10**9 wei
-        price of 1 nNTK = 3333 wei
+         1 wei = 3/10**4 nNTK
         
         For second phase the price will be 
-        price of 1 nNTK = 6666 wei
+        1 wei = 3/2*10**4
         
         for the final phase price is decided dynamically 
-        price of 1 nNTK = 100000 wei
+        1 wei = 9/10**4
         
 deployed contract address on rinkeby : 0x60b2fD16ED0eC58D52D7807d93154216b385303f
