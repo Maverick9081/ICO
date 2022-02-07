@@ -10,8 +10,8 @@ contract ICO is NiceToken  {
     uint private preSaleTokens=3*10**16;
     uint private seedSaleTokens =5*10**16;
     uint private finalSaleTokens=2*10**16;
+    uint public minimumBuyAmount =10000;
     
-   
     constructor () {
         admin = msg.sender;
     }
@@ -23,7 +23,7 @@ contract ICO is NiceToken  {
 
     function buyToken(address buyer)public payable  {
         uint weiAmount = msg.value;
-        require(weiAmount >100000);
+        require(weiAmount >minimumBuyAmount);
         uint amount = getTokenAmount(weiAmount);
         mintTokens(buyer,amount);
     }
@@ -75,7 +75,6 @@ contract ICO is NiceToken  {
     }
 
     function changePhase() internal{
-        require(currentIcoPhase <3);
         currentIcoPhase ++;
     }
     
@@ -89,9 +88,8 @@ contract ICO is NiceToken  {
         _mint(buyer,amount);
         mintedTokens += amount;
         uint i = tokensRemainsToBeSold();
-        if(i ==0   && currentIcoPhase <3){
+        if(i ==0   && currentIcoPhase <3 || i <= getTokenAmount(minimumBuyAmount) && currentIcoPhase <3 ){
             changePhase();
         }
     } 
-
 }
